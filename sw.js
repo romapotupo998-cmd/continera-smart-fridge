@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "continera-smart-fridge-v1";
+const CACHE_NAME = "continera-smart-fridge-v2";
 
 const APP_FILES = [
   "./",
