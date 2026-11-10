@@ -327,7 +327,7 @@ setInterval(() => {
  if (s.current > s.target) {
   s.current = Math.max(s.target, s.current - rate);
  } else if (s.current < s.target) {
-  s.current = Math.min(s.target, s.current + 0.015);
+  s.current = Math.min(s.target, s.current + rate);
  }
 
  s.current = Math.round(s.current * 10) / 10;
