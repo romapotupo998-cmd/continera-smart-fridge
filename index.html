@@ -8,94 +8,162 @@
 <title>Continera Smart Fridge</title>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#111315;color:#e9eeee;
- font-family:Arial,sans-serif;padding:18px;
- display:flex;justify-content:center;
+* {
+ box-sizing: border-box;
 }
-.app{
- width:100%;max-width:410px;
- background:#252a2d;border:2px solid #41494c;
- border-radius:18px;padding:17px;
- box-shadow:0 12px 35px #000;
+
+body {
+ margin: 0;
+ background: #111315;
+ color: #e9eeee;
+ font-family: Arial, sans-serif;
+ padding: 18px;
+ display: flex;
+ justify-content: center;
 }
-.header{text-align:center;margin-bottom:18px}
-.brand{font-size:22px;font-weight:bold;letter-spacing:4px}
-.subtitle{font-size:10px;color:#87969b;letter-spacing:2px;margin-top:5px}
-.screen{
- background:#091116;border:1px solid #344d5b;
- border-radius:12px;padding:17px;margin-bottom:12px;
- box-shadow:inset 0 0 15px #000;
+
+.app {
+ width: 100%;
+ max-width: 410px;
+ background: #252a2d;
+ border: 2px solid #41494c;
+ border-radius: 18px;
+ padding: 17px;
+ box-shadow: 0 12px 35px #000;
 }
-.caption{font-size:10px;color:#829eaa;text-align:center;letter-spacing:2px}
-.current{
- font-size:43px;text-align:center;color:#8ce4ff;
- margin:9px 0;text-shadow:0 0 12px #58bfe9;
+
+.header {
+ text-align: center;
+ margin-bottom: 18px;
 }
-.status{text-align:center;font-size:11px;color:#75dba5}
-.section{
- background:#171c1f;border:1px solid #3b4549;
- border-radius:11px;padding:13px;margin-top:12px;
+
+.brand {
+ font-size: 22px;
+ font-weight: bold;
+ letter-spacing: 4px;
 }
-.section-title{
- font-size:11px;color:#91a5ac;
- letter-spacing:2px;margin-bottom:12px;
+
+.subtitle {
+ font-size: 10px;
+ color: #87969b;
+ letter-spacing: 2px;
+ margin-top: 5px;
 }
-.target{
- display:flex;align-items:center;justify-content:center;
- gap:25px;margin:10px 0;
+
+.screen {
+ background: #091116;
+ border: 1px solid #344d5b;
+ border-radius: 12px;
+ padding: 17px;
+ margin-bottom: 12px;
+ box-shadow: inset 0 0 15px #000;
 }
-.target-value{font-size:30px;min-width:100px;text-align:center}
-button{
- border:1px solid #101719;border-radius:8px;
- background:linear-gradient(#41494d,#252c30);
- color:#eee;padding:12px;cursor:pointer;
- font-size:15px;touch-action:manipulation;
+
+.caption {
+ font-size: 10px;
+ color: #829eaa;
+ text-align: center;
+ letter-spacing: 2px;
 }
-button:active{filter:brightness(1.5)}
-button:disabled{opacity:.35}
-.temp-btn{width:48px;height:43px;font-size:23px}
-.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.modes button{font-size:12px}
-.active{
- background:linear-gradient(#315d69,#203c46);
- border-color:#75c9e4;color:#a8edff;
+
+.current {
+ font-size: 43px;
+ text-align: center;
+ color: #8ce4ff;
+ margin: 9px 0;
+ text-shadow: 0 0 12px #58bfe9;
 }
-.power{
- width:100%;margin-top:12px;
- background:linear-gradient(#397653,#21432f);
+
+.status {
+ text-align: center;
+ font-size: 11px;
+ color: #75dba5;
 }
-.power.off{background:linear-gradient(#743b3b,#432323)}
-.door{width:100%}
-.door.open{background:linear-gradient(#875b29,#513719)}
-.warning{
- display:none;margin-top:10px;padding:10px;
- background:#542c25;border:1px solid #b75a42;
- color:#ffc1a9;border-radius:7px;
- font-size:12px;text-align:center;
+
+.section {
+ background: #171c1f;
+ border: 1px solid #3b4549;
+ border-radius: 11px;
+ padding: 13px;
+ margin-top: 12px;
 }
-.warning.show{display:block}
-.info{
- display:flex;justify-content:space-between;
- color:#a5b2b5;font-size:11px;margin-top:12px;
+
+.section-title {
+ font-size: 11px;
+ color: #91a5ac;
+ letter-spacing: 2px;
+ margin-bottom: 12px;
 }
-.product-add{display:flex;gap:7px}
-input{
- min-width:0;flex:1;background:#0e1316;
- border:1px solid #465257;border-radius:7px;
- color:white;padding:11px;font-size:14px;
+
+.target {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 25px;
+ margin: 10px 0;
 }
-.product-add button{font-size:12px}
-ul{padding-left:20px;margin-bottom:0}
-li{padding:7px 0;color:#d3dddd;font-size:13px}
-.remove{
- float:right;padding:3px 8px;font-size:11px;
- background:#563331;
+
+.target-value {
+ font-size: 30px;
+ min-width: 100px;
+ text-align: center;
 }
-.footer{
- text-align:center;color:#667478;
- font-size:9px;letter-spacing:2px;margin-top:18px;
+
+button {
+ border: 1px solid #101719;
+ border-radius: 8px;
+ background: linear-gradient(#41494d,#252c30);
+ color: #eee;
+ padding: 12px;
+ cursor: pointer;
+ font-size: 15px;
+ touch-action: manipulation;
+}
+
+button:active {
+ filter: brightness(1.5);
+}
+
+button:disabled {
+ opacity: .35;
+}
+
+.temp-btn {
+ width: 48px;
+ height: 43px;
+ font-size: 23px;
+}
+
+.modes {
+ display: grid;
+ grid-template-columns: repeat(3,1fr);
+ gap: 7px;
+}
+
+.modes button {
+ font-size: 12px;
+}
+
+.active {
+ background: linear-gradient(#315d69,#203c46);
+ border-color: #75c9e4;
+ color: #a8edff;
+}
+
+.info {
+ display: flex;
+ justify-content: space-between;
+ color: #a5b2b5;
+ font-size: 11px;
+ margin-top: 12px;
+}
+
+.footer {
+ text-align: center;
+ color: #667478;
+ font-size: 9px;
+ letter-spacing: 2px;
+ margin-top: 18px;
 }
 </style>
 </head>
@@ -116,15 +184,27 @@ li{padding:7px 0;color:#d3dddd;font-size:13px}
 
  <div class="section">
   <div class="section-title">TARGET TEMPERATURE</div>
+
   <div class="target">
    <button class="temp-btn" id="minus">−</button>
    <div class="target-value" id="targetTemp">+4°C</div>
    <button class="temp-btn" id="plus">+</button>
   </div>
+
+  <div class="info">
+   <span>MINIMUM</span>
+   <span>+2°C</span>
+  </div>
+
+  <div class="info">
+   <span>MAXIMUM</span>
+   <span>+10°C</span>
+  </div>
  </div>
 
  <div class="section">
   <div class="section-title">COOLING MODE</div>
+
   <div class="modes">
    <button data-mode="eco">🌿 ECO</button>
    <button data-mode="normal">❄ NORMAL</button>
@@ -132,213 +212,130 @@ li{padding:7px 0;color:#d3dddd;font-size:13px}
   </div>
  </div>
 
- <button class="power" id="power">⏻ FRIDGE ON</button>
-
- <div class="section">
-  <div class="section-title">DOOR CONTROL</div>
-  <button class="door" id="door">🚪 OPEN DOOR</button>
-  <div class="warning" id="warning">
-   ⚠ DOOR OPEN TOO LONG! CLOSE THE DOOR.
-  </div>
-  <div class="info">
-   <span>DOOR STATUS</span>
-   <span id="doorStatus">CLOSED</span>
-  </div>
- </div>
-
- <div class="section">
-  <div class="section-title">FRIDGE CONTENTS</div>
-  <div class="product-add">
-   <input id="productInput" placeholder="Назва продукту...">
-   <button id="addProduct">ADD</button>
-  </div>
-  <ul id="products"></ul>
- </div>
-
  <div class="info">
-  <span>POWER</span>
-  <span id="powerStatus">ACTIVE</span>
+  <span>COOLING MODE</span>
+  <span id="modeStatus">NORMAL</span>
  </div>
 
- <div class="footer">CONTINERA • SMART CABIN SYSTEM</div>
+ <div class="footer">
+  CONTINERA • SMART CABIN SYSTEM
+ </div>
+
 </div>
 
 <script>
 const KEY = "contineraSmartFridge";
 
 const defaults = {
- power:true,
- current:5,
- target:4,
- mode:"normal",
- door:false,
- doorOpenedAt:null,
- products:[]
+ current: 5,
+ target: 4,
+ mode: "normal"
 };
 
-function load(){
- try{
-  const saved=JSON.parse(localStorage.getItem(KEY));
-  if(!saved)return {...defaults};
+function load() {
+ try {
+  const saved = JSON.parse(localStorage.getItem(KEY));
+
+  if (!saved) return {...defaults};
 
   return {
-   ...defaults,
-   ...saved,
-   current:Number.isFinite(saved.current)?saved.current:5,
-   target:Number.isFinite(saved.target)?
-    Math.min(10,Math.max(2,saved.target)):4,
-   mode:["eco","normal","max"].includes(saved.mode)?
-    saved.mode:"normal",
-   products:Array.isArray(saved.products)?
-    saved.products.filter(x=>typeof x==="string"):[],
-   doorOpenedAt:Number.isFinite(saved.doorOpenedAt)?
-    saved.doorOpenedAt:null
+   current: Number.isFinite(saved.current)
+    ? saved.current : defaults.current,
+
+   target: Number.isFinite(saved.target)
+    ? Math.min(10, Math.max(2, saved.target))
+    : defaults.target,
+
+   mode: ["eco", "normal", "max"].includes(saved.mode)
+    ? saved.mode : defaults.mode
   };
- }catch(e){
+
+ } catch (error) {
   return {...defaults};
  }
 }
 
-let s=load();
+let s = load();
 
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-function save(){
- localStorage.setItem(KEY,JSON.stringify(s));
+function save() {
+ try {
+  localStorage.setItem(KEY, JSON.stringify(s));
+ } catch (error) {
+  console.error("Save error:", error);
+ }
 }
 
-function render(){
- $("currentTemp").textContent=
-  (s.current>0?"+":"")+s.current.toFixed(1)+"°C";
+function render() {
+ $("currentTemp").textContent =
+  (s.current > 0 ? "+" : "") +
+  s.current.toFixed(1) + "°C";
 
- $("targetTemp").textContent="+"+s.target+"°C";
+ $("targetTemp").textContent = "+" + s.target + "°C";
 
- $("power").textContent=s.power?
-  "⏻ FRIDGE ON":"⏻ FRIDGE OFF";
+ $("modeStatus").textContent = s.mode.toUpperCase();
 
- $("power").classList.toggle("off",!s.power);
- $("powerStatus").textContent=s.power?"ACTIVE":"OFF";
+ $("status").textContent =
+  Math.abs(s.current - s.target) < 0.05
+   ? "● TARGET TEMPERATURE REACHED"
+   : "● COOLING ACTIVE";
 
- $("door").textContent=s.door?
-  "🚪 CLOSE DOOR":"🚪 OPEN DOOR";
+ $("minus").disabled = s.target <= 2;
+ $("plus").disabled = s.target >= 10;
 
- $("door").classList.toggle("open",s.door);
- $("doorStatus").textContent=s.door?"OPEN":"CLOSED";
-
- document.querySelectorAll("[data-mode]").forEach(b=>{
-  b.classList.toggle("active",b.dataset.mode===s.mode);
-  b.disabled=!s.power;
- });
-
- $("minus").disabled=!s.power||s.target<=2;
- $("plus").disabled=!s.power||s.target>=10;
- $("door").disabled=!s.power;
-
- $("status").textContent=!s.power?
-  "● SYSTEM OFF":
-  s.door?"● DOOR OPEN":
-  Math.abs(s.current-s.target)<0.05?
-  "● TARGET TEMPERATURE REACHED":
-  "● COOLING ACTIVE";
-
- const warning=s.door&&s.doorOpenedAt&&
-  Date.now()-s.doorOpenedAt>=30000;
-
- $("warning").classList.toggle("show",!!warning);
-
- $("products").innerHTML="";
-
- s.products.forEach((product,i)=>{
-  const li=document.createElement("li");
-  li.textContent=product;
-
-  const btn=document.createElement("button");
-  btn.textContent="REMOVE";
-  btn.className="remove";
-  btn.onclick=()=>{
-   s.products.splice(i,1);
-   save();
-   render();
-  };
-
-  li.appendChild(btn);
-  $("products").appendChild(li);
+ document.querySelectorAll("[data-mode]").forEach(button => {
+  button.classList.toggle(
+   "active",
+   button.dataset.mode === s.mode
+  );
  });
 
  save();
 }
 
-$("plus").onclick=()=>{
- if(s.target<10)s.target++;
- render();
+$("plus").onclick = () => {
+ if (s.target < 10) {
+  s.target++;
+  render();
+ }
 };
 
-$("minus").onclick=()=>{
- if(s.target>2)s.target--;
- render();
+$("minus").onclick = () => {
+ if (s.target > 2) {
+  s.target--;
+  render();
+ }
 };
 
-$("power").onclick=()=>{
- s.power=!s.power;
- render();
-};
-
-document.querySelectorAll("[data-mode]").forEach(b=>{
- b.onclick=()=>{
-  s.mode=b.dataset.mode;
+document.querySelectorAll("[data-mode]").forEach(button => {
+ button.onclick = () => {
+  s.mode = button.dataset.mode;
   render();
  };
 });
 
-$("door").onclick=()=>{
- if(!s.power)return;
-
- s.door=!s.door;
- s.doorOpenedAt=s.door?Date.now():null;
- render();
-};
-
-$("addProduct").onclick=()=>{
- const input=$("productInput");
- const value=input.value.trim();
-
- if(!value)return;
-
- s.products.push(value);
- input.value="";
- save();
- render();
-};
-
-$("productInput").addEventListener("keydown",e=>{
- if(e.key==="Enter")$("addProduct").click();
-});
-
-setInterval(()=>{
- const ambient=20;
- const rate={
-  eco:0.025,
-  normal:0.05,
-  max:0.09
+// Temperature simulation
+setInterval(() => {
+ const rate = {
+  eco: 0.025,
+  normal: 0.05,
+  max: 0.09
  }[s.mode];
 
- if(!s.power){
-  if(s.current<ambient)s.current=Math.min(ambient,s.current+0.025);
- }else if(s.door){
-  if(s.current<ambient)s.current=Math.min(ambient,s.current+0.035);
- }else{
-  if(s.current>s.target){
-   s.current=Math.max(s.target,s.current-rate);
-  }else if(s.current<s.target){
-   s.current=Math.min(s.target,s.current+0.015);
-  }
+ if (s.current > s.target) {
+  s.current = Math.max(s.target, s.current - rate);
+ } else if (s.current < s.target) {
+  s.current = Math.min(s.target, s.current + 0.015);
  }
 
- s.current=Math.round(s.current*10)/10;
+ s.current = Math.round(s.current * 10) / 10;
+
  render();
-},3000);
+}, 3000);
 
 render();
 </script>
+
 </body>
 </html>
