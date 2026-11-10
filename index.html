@@ -225,126 +225,190 @@ button:disabled {
 </div>
 
 <script>
-const KEY = "contineraSmartFridge";
+"use strict";
 
-const defaults = {
+const STORAGE_KEY = "contineraSmartFridge";
+
+const DEFAULT_STATE = {
  current: 5,
  target: 4,
  mode: "normal"
 };
 
-function load() {
- try {
-  const saved = JSON.parse(localStorage.getItem(KEY));
-
-  if (!saved) return {...defaults};
-
-  return {
-   current: Number.isFinite(saved.current)
-    ? saved.current : defaults.current,
-
-   target: Number.isFinite(saved.target)
-    ? Math.min(10, Math.max(2, saved.target))
-    : defaults.target,
-
-   mode: ["eco", "normal", "max"].includes(saved.mode)
-    ? saved.mode : defaults.mode
-  };
-
- } catch (error) {
-  return {...defaults};
- }
-}
-
-let s = load();
+const MODE_SPEED = {
+ eco: 0.025,
+ normal: 0.05,
+ max: 0.09
+};
 
 const $ = id => document.getElementById(id);
 
-function save() {
+const elements = {
+ current: $("currentTemp"),
+ target: $("targetTemp"),
+ status: $("status"),
+ modeStatus: $("modeStatus"),
+ plus: $("plus"),
+ minus: $("minus"),
+ modeButtons: document.querySelectorAll("[data-mode]")
+};
+
+function clamp(value, min, max) {
+ return Math.min(max, Math.max(min, value));
+}
+
+function loadState() {
  try {
-  localStorage.setItem(KEY, JSON.stringify(s));
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+  if (!saved || typeof saved !== "object") {
+   return { ...DEFAULT_STATE };
+  }
+
+  return {
+   current: Number.isFinite(saved.current)
+    ? clamp(saved.current, -20, 40)
+    : DEFAULT_STATE.current,
+
+   target: Number.isFinite(saved.target)
+    ? Math.round(clamp(saved.target, 2, 10))
+    : DEFAULT_STATE.target,
+
+   mode: ["eco", "normal", "max"].includes(saved.mode)
+    ? saved.mode
+    : DEFAULT_STATE.mode
+  };
+
+ } catch (error) {
+  console.error("Load error:", error);
+  return { ...DEFAULT_STATE };
+ }
+}
+
+let state = loadState();
+
+function saveState() {
+ try {
+  localStorage.setItem(
+   STORAGE_KEY,
+   JSON.stringify(state)
+  );
  } catch (error) {
   console.error("Save error:", error);
  }
 }
 
+function formatTemperature(value) {
+ const rounded = Math.round(value * 10) / 10;
+ const sign = rounded >= 0 ? "+" : "";
+
+ return sign + rounded.toFixed(1) + "°C";
+}
+
 function render() {
- $("currentTemp").textContent =
-  (s.current > 0 ? "+" : "") +
-  s.current.toFixed(1) + "°C";
+ elements.current.textContent =
+  formatTemperature(state.current);
 
- $("targetTemp").textContent = "+" + s.target + "°C";
+ elements.target.textContent =
+  "+" + state.target + "°C";
 
- $("modeStatus").textContent = s.mode.toUpperCase();
+ elements.modeStatus.textContent =
+  state.mode.toUpperCase();
 
- $("status").textContent =
-  Math.abs(s.current - s.target) < 0.05
-   ? "● TARGET TEMPERATURE REACHED"
-   : "● COOLING ACTIVE";
+ const difference = state.target - state.current;
 
- $("minus").disabled = s.target <= 2;
- $("plus").disabled = s.target >= 10;
+ if (Math.abs(difference) < 0.0005) {
+  elements.status.textContent =
+   "● TARGET TEMPERATURE REACHED";
+ } else if (difference > 0) {
+  elements.status.textContent =
+   "● WARMING ACTIVE";
+ } else {
+  elements.status.textContent =
+   "● COOLING ACTIVE";
+ }
 
- document.querySelectorAll("[data-mode]").forEach(button => {
+ elements.minus.disabled = state.target <= 2;
+ elements.plus.disabled = state.target >= 10;
+
+ elements.modeButtons.forEach(button => {
   button.classList.toggle(
    "active",
-   button.dataset.mode === s.mode
+   button.dataset.mode === state.mode
   );
  });
 
- save();
+ saveState();
 }
 
-$("plus").onclick = () => {
- if (s.target < 10) {
-  s.target++;
-  render();
- }
-};
-
-$("minus").onclick = () => {
- if (s.target > 2) {
-  s.target--;
-  render();
- }
-};
-
-document.querySelectorAll("[data-mode]").forEach(button => {
- button.onclick = () => {
-  s.mode = button.dataset.mode;
-  render();
- };
-});
-
-// Temperature simulation
-setInterval(() => {
- const rate = {
-  eco: 0.025,
-  normal: 0.05,
-  max: 0.09
- }[s.mode];
-
- if (s.current > s.target) {
-  s.current = Math.max(s.target, s.current - rate);
- } else if (s.current < s.target) {
-  s.current = Math.min(s.target, s.current + rate);
- }
-
- s.current = Math.round(s.current * 10) / 10;
+function changeTarget(amount) {
+ state.target = clamp(
+  state.target + amount,
+  2,
+  10
+ );
 
  render();
-}, 3000);
+}
 
+elements.plus.addEventListener("click", () => {
+ changeTarget(1);
+});
+
+elements.minus.addEventListener("click", () => {
+ changeTarget(-1);
+});
+
+elements.modeButtons.forEach(button => {
+ button.addEventListener("click", () => {
+  state.mode = button.dataset.mode;
+  render();
+ });
+});
+
+function updateTemperature() {
+ const difference = state.target - state.current;
+
+ if (Math.abs(difference) < 0.0005) {
+  state.current = state.target;
+  render();
+  return;
+ }
+
+ const speed = MODE_SPEED[state.mode];
+
+ const step = Math.min(
+  speed,
+  Math.abs(difference)
+ );
+
+ state.current += Math.sign(difference) * step;
+
+ // Зберігаємо точність до 0.001°C
+ state.current = Math.round(state.current * 1000) / 1000;
+
+ if (Math.abs(state.target - state.current) < 0.0005) {
+  state.current = state.target;
+ }
+
+ render();
+}
+
+// Початкове відображення
 render();
+
+// Температура оновлюється кожні 3 секунди
+setInterval(updateTemperature, 3000);
 </script>
 
- <script>
+<script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .catch(error => console.error("SW:", error));
-  });
+ window.addEventListener("load", () => {
+  navigator.serviceWorker.register("./sw.js")
+   .catch(error => console.error("SW:", error));
+ });
 }
- </script>
+</script>
+
 </body>
 </html>
